@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: postgres      
+    ports:
+        - 5432:5432
+    env_file:
+        - database.env # postgres configuration file containing login information
+    volumes:
+        - ./schema.sql:/docker-entrypoint-initdb.d/1-schema.sql # execs ddl script at startup
+        - ./data.sql:/docker-entrypoint-initdb.d/2-data.sql # execs dml script at startup
+
+volumes:
+    database-data:
